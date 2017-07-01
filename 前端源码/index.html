@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <style type="text/css">
+    html,body{
+        height: 100%;
+    }
+    #wrap{
+        height: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+    }
+    #header{
+        text-align: center;
+		background-color: #81a9c3;
+		color: #fff;
+        width: 100%;
+    }
+    #header h1{
+        font-size: 20px;
+		height: 44px;
+		line-height: 44px;
+		margin: 0em;
+		color: #fff;
+    }
+    #main{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+    }
+    #footer{
+        height: 30px;
+		line-height: 30px;
+        background-color: #81a9c3;
+        width: 100%;
+        text-align: center;
+    }
+    #footer h5{
+        color: white;
+    }
+    .con{
+		font-size: 28px;
+		text-align: center;
+	}
+
+    .an{ width: 130px; height: 45px; text-align: center; color: #fff; background-color: #333; line-height: 45px; font-size: 14px; float: left; margin: 50px 0 0 100px;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <h1>APICloud</h1>
+        </div>
+        <div id="main">
+          <div class="an" style="font-size: 12px;" onclick="ouid('uid_1');">给自己发送推送</div>
+          <div class="an" style="margin-top:20px;" onclick="all();">推送全部</div>
+          <div class="an" style="margin-top:20px;" onclick="hello();">推送hello群组</div>
+        </div>
+        <div id="footer">
+            <h5>Copyright &copy;<span id="year"></span> </h5>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript">
+    var ajpush = '';
+    apiready = function(){
+      ajpush = api.require('ajpush');
+      ajpush.init(function(ret) {
+          if (ret && ret.status){
+            alert('初始化成功');
+            var param = {alias:'uid_1',tags:['all','hello']};
+            ajpush.bindAliasAndTags(param,function(ret) {
+                    var statusCode = ret.statusCode;
+                    alert('绑定成功');
+            });
+          }else{
+            alert('初始化失败');
+          }
+      });
+
+    };
+
+
+    function ouid(id) {
+      api.ajax({
+          url: 'http://192.168.0.104/jgdemo/public/index/index/ts_id',
+          method: 'post',
+      },function(ret, err){
+          if (ret) {
+              alert( JSON.stringify( ret ) );
+          } else {
+              alert( JSON.stringify( err ) );
+          }
+      });
+
+    }
+    function hello() {
+      api.ajax({
+          url: 'http://192.168.0.104/jgdemo/public/index/index/ts_qz',
+          method: 'post',
+      },function(ret, err){
+          if (ret) {
+              alert( JSON.stringify( ret ) );
+          } else {
+              alert( JSON.stringify( err ) );
+          }
+      });
+
+    }
+
+    function all() {
+      api.ajax({
+          url: 'http://192.168.0.104/jgdemo/public/index/index/ts_all',
+          method: 'post',
+      },function(ret, err){
+          if (ret) {
+              alert( JSON.stringify( ret ) );
+          } else {
+              alert( JSON.stringify( err ) );
+          }
+      });
+    }
+</script>
+</html>
